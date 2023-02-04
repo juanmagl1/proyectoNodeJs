@@ -63,8 +63,11 @@ async function getProduct(req=request,res=response){
 async function removeProduct(req=request,res=response){
     //Recuperamos el id
     const id=req.params.id;
-    //Con el metodo de buscar por id y borrar nos borra el producto
-    const product=await Producto.findByIdAndDelete(id);
+    //Con el metodo de buscar por id
+    const product=await Producto.findById(id);
+
+    await Categoria.findByIdAndUpdate(product.categoria,{$pull:{"producto":req.params.id}})
+    await product.deleteOne()
     //Respondemos el producto que nos ha borrado
     res.json({
         product
@@ -75,13 +78,29 @@ async function removeProduct(req=request,res=response){
 async function editProduct(req=request,res=response){
     //cogemos el id 
     const id=req.params.id;
-    //Recogemos el body
-    const body=req.body;
-    const product=await Producto.findByIdAndUpdate(id,body)
+    //Recogemos el body con una destructuracion
+    const {name,description,stock,price,categoria}=req.body;
+    const body={name,description,stock,price,categoria};
+    const product=await Producto.findById(id);
+    if (categoria!=product.categoria){
+        await Categoria.findByIdAndUpdate(product.categoria,{$pull:{"producto":req.params.id}});
+        await Categoria.findByIdAndUpdate(categoria,{$push:{categoria:product.id}});
+        await product.updateOne({body})
+    }else {
+        await Producto.findByIdAndUpdate(id,body);
+    }
 
     res.json({
         product
     })
 
 }
-module.exports={addProduct,getAllProducts,getProduct,removeProduct,editProduct}
+
+async function productQueryParams(req=request,res=response){
+    const name=req.query.name;
+    const productos=await Producto.find({name:name})
+    res.json({
+        productos
+    })
+}
+module.exports={addProduct,getAllProducts,getProduct,removeProduct,editProduct,productQueryParams}

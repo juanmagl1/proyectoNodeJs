@@ -2,7 +2,7 @@ const express=require("express");
 const { check } = require("express-validator");
 const router=express.Router()
 //Importamos las funciones del controllers
-const {addProduct,getAllProducts,getProduct,removeProduct,editProduct,getProductPorCategoria} =require('../controllers/producto');
+const {addProduct,getAllProducts,getProduct,removeProduct,editProduct,productQueryParams} =require('../controllers/producto');
 const { validateFields } = require("../helpers/validate-fields");
 const { existsProduct } = require("../helpers/validators");
 
@@ -14,6 +14,7 @@ check('categoria','categoria is mandatory').notEmpty(),
 validateFields
 ],addProduct)
 router.get('/',getAllProducts)
+//router.get('/query?:query',productQueryParams)
 router.get('/:id',[
   check('id','Tiene que ser un id valido').isMongoId(),  
   validateFields  
@@ -23,6 +24,9 @@ router.delete('/:id',[
     check('id').custom(existsProduct),
     validateFields
 ],removeProduct)
-router.put('/:id',editProduct)
+router.put('/:id',[
+  check('id','Tiene que ser un id valido').isMongoId(),
+  validateFields
+],editProduct)
 
 module.exports=router
