@@ -83,8 +83,11 @@ async function editProduct(req=request,res=response){
     const body={name,description,stock,price,categoria};
     const product=await Producto.findById(id);
     if (categoria!=product.categoria){
+        //Si la categoria es distinta que la que le hemos pasado le borramos la categoria y le añadimos
+        //la categoria nueva
         await Categoria.findByIdAndUpdate(product.categoria,{$pull:{"producto":req.params.id}});
         await Categoria.findByIdAndUpdate(categoria,{$push:{categoria:product.id}});
+        //Por ultimo acualizamos el producto
         await product.updateOne({body})
     }else {
         await Producto.findByIdAndUpdate(id,body);
