@@ -20,7 +20,7 @@ async function addProduct(req=request,res=response){
 //Obtener todos los productos de la base de datos
 async function getAllProducts(req=request,res=response){
     //Recuperamos todos los campos por si alguno tiene valor
-    const {name,description,stock,price}=req.body;
+    const {name,description,stock,price}=req.query;
     //Metemos los campos en una variable con la destructuración
     const query={name,description,stock,price}
 

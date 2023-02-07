@@ -7,16 +7,16 @@ const UsuarioSchema= Schema({
     password:{
         type:String
     },
+    email:{
+        type:String
+    },
     name:{
         type:String
     },
     age:{
         type:Number
-    },
-    rol:{
-        type:String
-    },
+    }
 
 })
 
-module.exports=model('Producto',ProductoSchema)
+module.exports=model('Usuario',UsuarioSchema)
