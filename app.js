@@ -8,6 +8,7 @@ const app=express()
 const producto=require('./routes/producto')
 const categoria=require('./routes/categoria')
 const usuario=require('./routes/usuario')
+const auth=require('./routes/auth')
 //Conectar a la database
 async function connectAtlas(){
     await dbConnection()
@@ -24,6 +25,7 @@ app.use(express.json())
 app.use('/productos',producto)
 app.use('/categoria',categoria)
 app.use('/usuario',usuario)
+app.use('/auth',auth)
 
 
 app.listen(process.env.PORT)
