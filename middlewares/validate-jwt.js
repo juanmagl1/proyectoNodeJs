@@ -21,6 +21,9 @@ async function validateJWT(req=request,res=response,next){
         next();
     } catch (error) {
         console.log(error);
+        return res.json({
+            message:'El token ha caducado'
+        })
     }
 }
 

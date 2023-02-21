@@ -4,20 +4,7 @@ const Categoria=require('../models/categoria');
 const Producto=require('../models/producto');
 
 async function getAllCategories(req=request,res=response){
-    //Recuperamos todos los campos por si alguno tiene valor
-    const {name}=req.body;
-    //Metemos los campos en una variable con la destructuración
-    const query={name}
-
-    //Recorremos los campos para ver si no tiene valor
-    for (const i in query){
-        if (query[i]===undefined){
-            delete query[i];
-        }
-    }
-
-    
-    const categoria=await Categoria.find(query)
+    const categoria=await Categoria.find()
     res.json({
         categoria
     })
@@ -38,7 +25,7 @@ async function addCategory(req=request,res=response){
 async function getCategory(req=request,res=response){
     const id=req.params.id;
     const category= await Categoria.findById(id);
-    if (!category.length){
+    if (!category){
         res.json({
             category
         })
@@ -60,4 +47,20 @@ async function removeCategory(req=request,res=response){
     })
 }
 
-module.exports={getAllCategories,addCategory,getCategory,removeCategory}
+async function updateCategory(req=request,res=response){
+    const id=req.params.id;
+    const body=req.body;
+    const categoria=Categoria.find({name:body.name});
+    if ((await categoria).length>1){
+        res.json({
+            "message":`La categoria tiene ya ese nombre`
+        })
+    }else{
+        const category= await Categoria.findByIdAndUpdate(id,body);
+        res.json({
+            category
+        })
+    }
+}
+
+module.exports={getAllCategories,addCategory,getCategory,removeCategory,updateCategory}

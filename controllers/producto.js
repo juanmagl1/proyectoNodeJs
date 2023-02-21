@@ -67,7 +67,7 @@ async function removeProduct(req=request,res=response){
     const product=await Producto.findById(id);
 
     await Categoria.findByIdAndUpdate(product.categoria,{$pull:{"producto":req.params.id}})
-    await product.deleteOne()
+    await Producto.findByIdAndDelete(id)
     //Respondemos el producto que nos ha borrado
     res.json({
         product
