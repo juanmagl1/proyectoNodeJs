@@ -1,7 +1,7 @@
 const express=require('express')
 const {dbConnection}=require('./database/config');
 require('dotenv').config();
-
+const fileUpload=require('express-fileupload')
 const app=express()
 
 //Aquí ponemos las rutas
@@ -19,6 +19,11 @@ connectAtlas()
 //Middlewares
 
 app.use(express.json())
+app.use(fileUpload({
+    useTempFiles:true,
+    tempFileDir:'/tmp/',
+    createParentPath:true
+}));
 
 
 //Routes

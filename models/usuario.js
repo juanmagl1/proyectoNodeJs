@@ -15,6 +15,9 @@ const UsuarioSchema= Schema({
     },
     age:{
         type:Number
+    },
+    img:{
+        type:String
     }
 
 })
