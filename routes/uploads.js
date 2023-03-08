@@ -2,7 +2,7 @@ const { Router } = require('express');
 const { check } = require('express-validator');
 const {upload,updateImage} = require('../controllers/uploads');
 const { validateFields } = require('../helpers/validate-fields');
-const coleccion= ['categoria','producto','servicio']
+const coleccion= ['categoria','producto','usuarios']
 
 
 const router = Router();

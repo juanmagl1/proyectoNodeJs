@@ -17,7 +17,8 @@ const UsuarioSchema= Schema({
         type:Number
     },
     img:{
-        type:String
+        type:String,
+        default:null
     }
 
 })

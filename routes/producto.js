@@ -4,7 +4,7 @@ const router=express.Router()
 //Importamos las funciones del controllers
 const {addProduct,getAllProducts,getProduct,removeProduct,editProduct,productQueryParams} =require('../controllers/producto');
 const { validateFields } = require("../helpers/validate-fields");
-const { existsProduct } = require("../helpers/validators");
+const { noExistsProduct } = require("../helpers/validators");
 const {validateJWT}=require('../middlewares/validate-jwt')
 router.post('/',[
   validateJWT,
@@ -21,6 +21,7 @@ router.get('/:id',[
 ],getProduct)
 router.delete('/:id',[
     validateJWT,
+    check('id').custom(noExistsProduct),
     check('id','Tiene que ser un id valido').isMongoId(),
     validateFields
 ],removeProduct)
