@@ -7,10 +7,10 @@ const noExistsProduct = async (id) => {
 	}
 }
 
-const existsObject = async (email) => {
-	const producto = await Product.findOne({email});
-	if (producto) {
-		throw new Error(`ese producto ya existe`)
+const existsObject = async (username) => {
+	const producto = await Product.findOne({username:username});
+	if (!producto) {
+		throw new Error(`ese usuario ya existe`)
 	}
 }
 

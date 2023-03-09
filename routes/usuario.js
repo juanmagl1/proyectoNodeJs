@@ -9,6 +9,7 @@ router.get('/',[
 ],getAllUsers)
 router.post('/',[
     validateJWT,
+    check('username').custom(existsObject),
     check('name','Name is mandatory').notEmpty(),
     check('username','Username is mandatory').notEmpty(),
     check('email','Email is mandatory').notEmpty(),

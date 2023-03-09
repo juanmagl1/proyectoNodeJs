@@ -4,7 +4,7 @@ const router=express.Router()
 //Importamos las funciones del controllers
 const {addProduct,getAllProducts,getProduct,removeProduct,editProduct,productQueryParams} =require('../controllers/producto');
 const { validateFields } = require("../helpers/validate-fields");
-const { noExistsProduct } = require("../helpers/validators");
+const { noExistsProduct, existsObject } = require("../helpers/validators");
 const {validateJWT}=require('../middlewares/validate-jwt')
 router.post('/',[
   validateJWT,
