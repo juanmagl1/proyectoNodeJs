@@ -9,7 +9,7 @@ const noExistsProduct = async (id) => {
 
 const existsObject = async (username) => {
 	const producto = await Product.findOne({username:username});
-	if (!producto) {
+	if (producto) {
 		throw new Error(`ese usuario ya existe`)
 	}
 }
